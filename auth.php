@@ -279,9 +279,11 @@ class auth_plugin_casattras extends auth_plugin_base {
 
         // Don't do CAS authentication if the username/password form was submitted.
         // CAS redirects will always be GET requests, so any posts shouldn't be handled by CAS.
+	//KIKE, remove $_SERVER['REQUEST_METHOD'] == 'POST' from the if, because the login button 
+	//in the header was doing a post and this plugin did not redirect to CAS
         $username = optional_param('username', '', PARAM_RAW);
         $ticket = optional_param('ticket', '', PARAM_RAW);
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' || (!empty($username) && empty($ticket))) {
+        if (!empty($username) && empty($ticket)) {
             return;
         }
 
